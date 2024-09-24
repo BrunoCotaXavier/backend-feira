@@ -1,31 +1,51 @@
 const express = require('express');
-const syncDatabase = require('./data/sync');
 const app = express();
 const db = require('./data/db');
 const migration = require('./data/migration');
+const { createMassage, getAll } = require('./service/index');
+const { validationMiddleware } = require('./middleware');
+const cors = require('cors');
 
 const PORT = 3000;
 
 app.use(express.json());
+app.use(cors());
 
-app.get('/', (req, res) => {
-    res.send('Olá, este é o seu serviço em Node.js!');
+app.post('/createMassage', validationMiddleware, (req, res) => {
+    const { nomeCompleto, unidade, re, eo, horario } = req.body;
+    const formulario = {
+        nomeCompleto,
+        unidade,
+        re,
+        eo,
+        horario
+    };
+    try {
+        createMassage(formulario)
+            .then(data => {
+                console.log('### data ', data)
+                return res.status(200).json({ message: 'Dados salvo com sucesso!', data });
+            })
+    } catch (error) {
+        res.status(400).json({ message: '### Error: erro no post ao criar nova massagem ', error });
+    }
 });
 
-app.post('/natanzin', (req, res) => {
-    const { nome, sobrenome, idade } = req.body;
-    const formulario = {
-        nome: nome,
-        sobrenome: sobrenome,
-        idade: idade
+app.get('/listMassages', async (req, res) => {
+    try {
+        const massages = await getAll();
+        res.status(200).json({ message: 'listagem concluida', massages })
+    } catch (error) {
+        res.status(400).json({ message: '### Error: erro no get all de massagem ', error });
     }
-    res.send('Seus dados foram salvos com sucesso!');
 })
+
+
 
 migration();
 
-db.sequelize.sync({ force: true }).then(() => {
+db.sequelize.sync(/* { force: true } */).then(() => {
     app.listen(PORT, () => {
-        console.log(`Servidor rodando na porta: ${PORT}`);
+        console.log(`### Servidor rodando na porta: ${PORT}`);
     });
 });

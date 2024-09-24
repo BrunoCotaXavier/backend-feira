@@ -15,6 +15,6 @@ const db = {};
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-db.massagem = require('./models')
+db.massagem = require('./models')(sequelize, Sequelize.DataTypes); 
 
 module.exports = db
