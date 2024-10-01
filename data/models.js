@@ -19,6 +19,10 @@ module.exports = (sequelize, DataTypes) => {
         horario: {
             type: DataTypes.STRING,
             allowNull: false
+        },
+        typeMassage: {
+            type: DataTypes.STRING,
+            allowNull: false
         }
     })
 

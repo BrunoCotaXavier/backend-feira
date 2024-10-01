@@ -12,13 +12,14 @@ app.use(express.json());
 app.use(cors());
 
 app.post('/createMassage', validationMiddleware, (req, res) => {
-    const { nomeCompleto, unidade, re, eo, horario } = req.body;
+    const { nomeCompleto, unidade, re, eo, horario, typeMassage } = req.body;
     const formulario = {
         nomeCompleto,
         unidade,
         re,
         eo,
-        horario
+        horario,
+        typeMassage
     };
     try {
         createMassage(formulario)
@@ -41,10 +42,10 @@ app.get('/listMassages', async (req, res) => {
 })
 
 
+/* 
+migration(); */
 
-migration();
-
-db.sequelize.sync(/* { force: true } */).then(() => {
+db.sequelize.sync({ force: true }).then(() => {
     app.listen(PORT, () => {
         console.log(`### Servidor rodando na porta: ${PORT}`);
     });
