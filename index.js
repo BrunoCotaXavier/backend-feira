@@ -53,7 +53,7 @@ app.get('/directList', async (req, res) => {
 
 migration();
 
-db.sequelize.sync({ force: true }).then(() => {
+db.sequelize.sync(/* { force: true } */).then(() => {
     app.listen(PORT, () => {
         console.log(`### Servidor rodando na porta: ${PORT}`);
     });
