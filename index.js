@@ -41,8 +41,8 @@ app.get('/listMassages', async (req, res) => {
 })
 
 
-/* 
-migration(); */
+
+migration();
 
 db.sequelize.sync({ force: true }).then(() => {
     app.listen(PORT, () => {
