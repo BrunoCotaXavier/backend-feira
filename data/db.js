@@ -4,7 +4,7 @@ const Sequelize = require('sequelize');
 const dbName = 'massagem';
 const dbUser = 'root';
 const dbPassword = 'root123';
-const dbHost = '62.72.9.90';
+const dbHost = 'localhost';
 
 const sequelize = new Sequelize(dbName, dbUser, dbPassword, {
   host: dbHost,
