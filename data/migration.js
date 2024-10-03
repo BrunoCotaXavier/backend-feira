@@ -4,8 +4,8 @@ module.exports = () => {
     // Definir informações de conexão
     const dbName = 'massagem';
     const dbUser = 'root';
-    const dbPassword = 'root123';
-    const dbHost = 'localhost';
+    const dbPassword = 'nova_senha';
+    const dbHost = '127.0.0.1';
     
     // Criar uma conexão sem especificar um banco de dados
     const connection = mysql.createConnection({
