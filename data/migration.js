@@ -1,6 +1,6 @@
 const mysql = require('mysql2');
 
-module.exports = () => {
+module.exports = async () => {
     // Definir informações de conexão
     const dbName = 'massagem';
     const dbUser = 'root';
