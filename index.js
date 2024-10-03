@@ -24,7 +24,6 @@ app.post('/createMassage', validationMiddleware, (req, res) => {
     try {
         createMassage(formulario)
             .then(data => {
-                console.log('### data ', data)
                 return res.status(200).json({ message: 'Dados salvo com sucesso!', data });
             })
     } catch (error) {

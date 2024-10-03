@@ -13,7 +13,7 @@ const validationMiddleware = async (req, res, next) => {
     // adicionar na pausa lanch todas as pausas
     const { nomeCompleto, unidade, re, eo, horario, typeMassage } = req.body;
 
-    if (!nomeCompleto || !unidade || !re || !eo || !horario || !typeMassage ){
+    if (!nomeCompleto || !unidade || !re || !eo || !horario || !typeMassage) {
         return res.status(500).json({ message: 'Erro: campos não preenchidos' })
     }
 
@@ -32,17 +32,40 @@ const validationMiddleware = async (req, res, next) => {
 const availableTime = async (massages, horario, res, typeMassage) => {
     if (typeMassage === 'reflexologia') {
         var countA = 0;
+        var currentDate = new Date();
+
         for (let i = 0; i < massages.length; i++) {
-            if (massages[i].horario === horario && massages[i].typeMassage === 'reflexologia') { countA++ }
+            var createdAt = massages[i].createdAt;
+            var date = new Date(createdAt);
+
+            // Verificando se a massagem foi criada no mesmo dia, mês e ano
+            var sameDay = date.getDate() === currentDate.getDate() &&
+                date.getMonth() === currentDate.getMonth() &&
+                date.getFullYear() === currentDate.getFullYear();
+
+            // Contando apenas se o dia for o mesmo, e se o horário e o tipo de massagem coincidem.
+            if (sameDay && massages[i].horario === horario && massages[i].typeMassage === 'reflexologia') {
+                countA++;
+            }
         }
         if (countA === 8) {
             console.log('Error: erro ao buscar massagem no banco');
             return { error: 'Error: Horario Indisponivel', status: 400 };
         }
+
     } else {
         var countB = 0;
+        var currentDate = new Date();
         for (let i = 0; i < massages.length; i++) {
-            if (massages[i].horario === horario && massages[i].typeMassage === 'quickMassage') { countB++ }
+            var createdAt = massages[i].createdAt;
+            var date = new Date(createdAt);
+
+            // Verificando se a massagem foi criada no mesmo dia, mês e ano
+            var sameDay = date.getDate() === currentDate.getDate() &&
+                date.getMonth() === currentDate.getMonth() &&
+                date.getFullYear() === currentDate.getFullYear();
+
+            if (sameDay && massages[i].horario === horario && massages[i].typeMassage === 'quickMassage') { countB++ }
         }
         if (countB === 10) {
             console.log('Error: erro ao buscar massagem no banco');
@@ -75,8 +98,17 @@ const lunchTime = async (massages, horario, res, typeMassage) => {
         // lanchTime reflexologia
         if (typeMassage === 'reflexologia') {
             var countA = 0;
+            var currentDate = new Date();
             for (let i = 0; i < massages.length; i++) {
-                if (massages[i].horario === horario && massages[i].typeMassage === 'reflexologia') { countA++ }
+                var createdAt = massages[i].createdAt;
+                var date = new Date(createdAt);
+
+                // Verificando se a massagem foi criada no mesmo dia, mês e ano
+                var sameDay = date.getDate() === currentDate.getDate() &&
+                    date.getMonth() === currentDate.getMonth() &&
+                    date.getFullYear() === currentDate.getFullYear();
+
+                if (sameDay && massages[i].horario === horario && massages[i].typeMassage === 'reflexologia') { countA++ }
             }
             if (countA === 4) {
                 console.log('Error: erro ao buscar massagem no banco');
@@ -85,8 +117,17 @@ const lunchTime = async (massages, horario, res, typeMassage) => {
         } else {
             // lanchTime quickMassage
             var countB = 0;
+            var currentDate = new Date();
             for (let i = 0; i < massages.length; i++) {
-                if (massages[i].horario === horario && massages[i].typeMassage === 'quickMassage') { countB++ }
+                var createdAt = massages[i].createdAt;
+                var date = new Date(createdAt);
+
+                // Verificando se a massagem foi criada no mesmo dia, mês e ano
+                var sameDay = date.getDate() === currentDate.getDate() &&
+                    date.getMonth() === currentDate.getMonth() &&
+                    date.getFullYear() === currentDate.getFullYear();
+
+                if (sameDay && massages[i].horario === horario && massages[i].typeMassage === 'quickMassage') { countB++ }
             }
             if (countB === 5) {
                 console.log('Error: erro ao buscar massagem no banco');

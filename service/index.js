@@ -4,7 +4,7 @@ const { massagem } = require("../data/db");
 const createMassage = async (data) => {
     try {
         const newMassage = await massagem.create(data);
-        console.log('### createMassage ', newMassage);
+        /* console.log('### createMassage ', newMassage); */
         return newMassage;
     } catch (error) {
         console.log('Error: erro ao criar nova massagem no banco: ', error);
