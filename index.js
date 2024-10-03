@@ -40,6 +40,15 @@ app.get('/listMassages', async (req, res) => {
     }
 })
 
+app.get('/directList', async (req, res) => {
+    try {
+        const massages = await getAll();
+        res.status(200).json(massages)
+    } catch (error) {
+        res.status(400).json({ message: '### Error: erro no get all de massagem ', error });
+    }
+})
+
 
 
 migration();
